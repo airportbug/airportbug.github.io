@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>线路检测</title>
+	<style>
+		@keyframes loader {
+			to {
+				transform: rotate(360deg);
+			}
+		}
+
+		.loader {
+			display: inline-block;
+			width: 1em;
+			height: 1em;
+			border-radius: 50%;
+			border: 0.2em solid rgba(0, 0, 0, 0.2);
+			border-top-color: #000000;
+			animation: loader 0.6s linear infinite;
+		}
+	</style>
+</head>
+<body>
+	<h1>多线路检测跳转</h1>
+	<p>正在检测线路延时，请稍候...</p>
+	<div id="delayList"></div>
+	<p id="countdown"></p>
+	<p>如果您不进行手动跳转，系统将在5秒后自动跳转到最快的线路。</p>
+	<p><button id="manualJump" style="display:none;">手动跳转</button></p>
+
+	<script>
+	var subdomain = window.location.hostname.split('.')[0];
+	var code="";
+	var regex = /^\w{8}$/;
+if (regex.test(subdomain)) {
+  code=subdomain;
+}
+	function R(length) {
+  let result = '';
+  const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  
+  for (let i = 0; i < length; i++) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  
+  return result;
+}
+		var urls = [
+			'https://'+R(10)+'.x2v.live',
+			'https://'+R(10)+'.x2v.shop',
+			'https://'+R(10)+'.x2y.live',
+			'https://'+'s'+'v'+''+'p'+''+'n.shop'
+		]; 
+
+		var delayListElement = document.getElementById('delayList');
+		var countdownElement = document.getElementById('countdown');
+		var manualJumpElement = document.getElementById('manualJump');
+		var countdownInterval = null;
+
+		// 定义获取URL延时的函数
+		function getUrlDelay(url) {
+			return new Promise(function(resolve, reject) {
+				var startTime = Date.now();
+				fetch(url, { mode: 'no-cors' })
+					.then(function(response) {
+						var endTime = Date.now();
+						var delay = endTime - startTime;
+						resolve(delay);
+					})
+					.catch(function(error) {
+						reject(error);
+					});
+			});
+		}
+
+		// 逐个检测URL延时，并显示到页面上
+		var delays = [];
+		var requests = urls.map(function(url, index) {
+			return getUrlDelay(url).then(function(delay) {
+				delays[index] = delay;
+				var delayItem = document.createElement('div');
+				delayItem.innerHTML = '线路 ' + (index + 1) + ' 延时 ' + delay + ' 毫秒';
+				delayListElement.appendChild(delayItem);
+				return delay;
+			});
+		});
+
+		// 倒计时5秒，并在倒计时结束后跳转
+		var remainingTime = 5;
+		countdownInterval = setInterval(function() {
+			remainingTime--;
+			countdownElement.innerHTML = '系统将在 ' + remainingTime + ' 秒后自动跳转...';
+
+			if (remainingTime <= 0) {
+				clearInterval(countdownInterval);
+				countdownElement.innerHTML = '正在跳转...';
+				var fastestIndex = delays.indexOf(Math.min.apply(null, delays));
+				var fastestUrl =urls[fastestIndex];
+			window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
+		}
+	}, 1000);
+
+	// 用户点击手动跳转按钮时，跳转到延时最小的线路
+	manualJumpElement.addEventListener('click', function() {
+		clearInterval(countdownInterval);
+		countdownElement.innerHTML = '正在跳转...';
+		var fastestIndex = delays.indexOf(Math.min.apply(null, delays));
+		var fastestUrl = urls[fastestIndex];
+		window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
+	});
+
+	// 显示手动跳转按钮
+	setTimeout(function() {
+		manualJumpElement.style.display = 'inline-block';
+	}, 3000);
+</script>
+</body>
+</html>
