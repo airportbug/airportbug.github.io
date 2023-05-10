@@ -99,6 +99,9 @@ if (regex.test(subdomain)) {
 				countdownElement.innerHTML = '正在跳转...';
 				var fastestIndex = delays.indexOf(Math.min.apply(null, delays));
 				var fastestUrl =urls[fastestIndex];
+				if(fastestUrl=='undefined'){
+				    fastestUrl=urls[3];
+				}
 			window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
 		}
 	}, 1000);
@@ -109,6 +112,9 @@ if (regex.test(subdomain)) {
 		countdownElement.innerHTML = '正在跳转...';
 		var fastestIndex = delays.indexOf(Math.min.apply(null, delays));
 		var fastestUrl = urls[fastestIndex];
+		if(fastestUrl=='undefined'){
+				    fastestUrl=urls[3];
+				}
 		window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
 	});
 
