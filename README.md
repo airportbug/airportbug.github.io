@@ -4,4 +4,6 @@
 ### VPN·V2ray·Shadowsocks·中转翻墙
 
 #### TG服务:https://t.me/inhot
-#### TG群:https://t.me/airprotbug
+#### TG群:https://t.me/BugAirport
+推特：https://twitter.com/BugAirport
+油管：https://www.youtube.com/@BugAirport
