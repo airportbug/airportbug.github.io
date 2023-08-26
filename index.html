@@ -122,7 +122,7 @@ code=parameterValue;
 				if(fastestUrl=='undefined'){
 				    fastestUrl=urls[0];
 				}
-			window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
+			window.location.href = code?nowurl+'/#/register?code='+code:nowurl;
 		}
 	}, 1000);
 
@@ -135,7 +135,7 @@ code=parameterValue;
 		if(fastestUrl=='undefined'){
 				    fastestUrl=urls[0];
 				}
-		window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
+		window.location.href = code?nowurl+'/#/register?code='+code:nowurl;
 	});
 
 	// 显示手动跳转按钮
