@@ -86,12 +86,12 @@ code=parameterValue;
 		}
 
 		// 逐个检测URL延时，并显示到页面上
-		var delays = [];
+		var delays = [0,0,0,0,0];
 		var requests = urls.map(function(url, index) {
 			return getUrlDelay(url).then(function(delay) {
 				delays[index] = delay;
 				var delayItem = document.createElement('div');
-				delayItem.innerHTML = '线路 ' + (index + 1) + ' 延时 ' + delay + ' 毫秒';
+				delayItem.innerHTML = '线路 ' + (index + 1) + ' 延时 ' + delay + ' 毫秒 <a href="'+urls[(index)]+'">'+urls[(index)]+'</a>';
 				delayListElement.appendChild(delayItem);
 				return delay;
 			});
@@ -105,13 +105,17 @@ code=parameterValue;
 
 			if (remainingTime <= 0) {
 				clearInterval(countdownInterval);
-				countdownElement.innerHTML = '正在跳转...';
-				var fastestIndex = delays.indexOf(Math.min.apply(null, delays));
+				
+				var fastestIndex = delays.indexOf(Math.min.apply(null,delays));
+				if(fastestIndex<0){
+				    fastestIndex=0;
+				}
 				var fastestUrl =urls[fastestIndex];
+				countdownElement.innerHTML = '正在跳转...【线路'+fastestIndex+'】<a href="'+fastestUrl+'">'+fastestUrl+'</a>';
 				if(fastestUrl=='undefined'){
 				    fastestUrl=urls[3];
 				}
-			window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
+		//	window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
 		}
 	}, 1000);
 
