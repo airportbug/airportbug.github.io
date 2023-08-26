@@ -57,11 +57,10 @@ code=parameterValue;
   return result;
 }
 		var urls = [
-        	'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'y'+'.'+'o'+'n'+'e',
-			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'v'+'.'+'l'+'i'+'v'+'e',
-			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'v'+'.'+'s'+'h'+'o'+'p',
-			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'v'+'i'+'p'+'.'+'x'+'2'+'y'+'.'+'l'+'i'+'v'+'e',
-			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'s'+'v'+''+'p'+''+'n'+'.'+'o'+'n'+'e'
+        	'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'c'+'d'+'n'+'.'+'x'+'2'+'y'+'.'+'o'+'n'+'e',
+			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'c'+'d'+'n'+'.'+'x'+'2'+'v'+'.'+'l'+'i'+'v'+'e',
+			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'c'+'d'+'n'+'.'+'x'+'2'+'v'+'.'+'s'+'h'+'o'+'p',
+			'h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'c'+'d'+'n'+'.'+'x'+'2'+'y'+'.'+'l'+'i'+'v'+'e',
 		]; 
 
 		var delayListElement = document.getElementById('delayList');
@@ -86,12 +85,20 @@ code=parameterValue;
 		}
 
 		// 逐个检测URL延时，并显示到页面上
+		var nowid=0;
+		var nowurl='';
+		var nowdelay=0;
 		var delays = [0,0,0,0,0];
 		var requests = urls.map(function(url, index) {
 			return getUrlDelay(url).then(function(delay) {
 				delays[index] = delay;
 				var delayItem = document.createElement('div');
 				delayItem.innerHTML = '线路 ' + (index + 1) + ' 延时 ' + delay + ' 毫秒 <a href="'+urls[(index)]+'">'+urls[(index)]+'</a>';
+				if(nowurl==''){
+				    nowurl=urls[(index)];
+				    nowid=index;
+				    nowdelay=delay;
+				}
 				delayListElement.appendChild(delayItem);
 				return delay;
 			});
@@ -111,9 +118,9 @@ code=parameterValue;
 				    fastestIndex=0;
 				}
 				var fastestUrl =urls[fastestIndex];
-				countdownElement.innerHTML = '正在跳转...【线路'+fastestIndex+'】<a href="'+fastestUrl+'">'+fastestUrl+'</a>';
+				countdownElement.innerHTML = '正在跳转...【线路'+(nowid+1)+'|'+nowdelay+'】<a href="'+nowurl+'">'+nowurl+'</a>';
 				if(fastestUrl=='undefined'){
-				    fastestUrl=urls[3];
+				    fastestUrl=urls[0];
 				}
 			window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
 		}
@@ -126,7 +133,7 @@ code=parameterValue;
 		var fastestIndex = delays.indexOf(Math.min.apply(null, delays));
 		var fastestUrl = urls[fastestIndex];
 		if(fastestUrl=='undefined'){
-				    fastestUrl=urls[3];
+				    fastestUrl=urls[0];
 				}
 		window.location.href = code?fastestUrl+'/#/register?code='+code:fastestUrl;
 	});
