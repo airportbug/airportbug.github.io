@@ -89,11 +89,13 @@ code=parameterValue;
 		var nowurl='';
 		var nowdelay=0;
 		var delays = [0,0,0,0,0];
+		var mi=0;
 		var requests = urls.map(function(url, index) {
 			return getUrlDelay(url).then(function(delay) {
 				delays[index] = delay;
 				var delayItem = document.createElement('div');
 				delayItem.innerHTML = '线路 ' + (index + 1) + ' 延时 ' + delay + ' 毫秒 <a href="'+urls[(index)]+'">'+urls[(index)]+'</a>';
+				mi++;
 				if(nowurl==''){
 				    nowurl=urls[(index)];
 				    nowid=index;
@@ -104,6 +106,8 @@ code=parameterValue;
 			});
 		});
 
+
+		
 		// 倒计时5秒，并在倒计时结束后跳转
 		var remainingTime = 5;
 		countdownInterval = setInterval(function() {
@@ -113,6 +117,17 @@ code=parameterValue;
 			if (remainingTime <= 0) {
 				clearInterval(countdownInterval);
 				
+				if(mi==0){
+				    
+				    for(var i=0;i<urls.length;i++){
+				        	var delayItem = document.createElement('div');
+				        delayItem.innerHTML = '线路 ' + (i + 1) + ' 手动访问-> <a href="'+urls[(i)]+'">'+urls[(i)]+'</a>';
+				        delayListElement.appendChild(delayItem);
+				    }
+				    countdownElement.innerHTML = '<font color="#FF0000"><b>攻击保护模式 测速失败 请手动尝试访问上方网址，或右下角咨询<a href="h'+'t'+'t'+'p'+'s'+':'+'/'+'/'+'t'+'a'+'w'+'k'+'.'+'t'+'o'+'/'+'c'+'h'+'a'+'t'+'/'+'6'+'4'+'4'+'3'+'1'+'4'+'b'+'3'+'4'+'2'+'4'+'7'+'f'+'2'+'0'+'f'+'e'+'f'+'e'+'d'+'1'+'2'+'7'+'1'+'/'+'1'+'g'+'u'+'j'+'0'+'h'+'o'+'h'+'n">在线客服</a></b></font>。';
+		}else{
+		
+		
 				var fastestIndex = delays.indexOf(Math.min.apply(null,delays));
 				if(fastestIndex<0){
 				    fastestIndex=0;
@@ -124,8 +139,12 @@ code=parameterValue;
 				}
 			window.location.href = code?nowurl+'/#/register?code='+code:nowurl;
 		}
-	}, 1000);
+		}
 
+	}, 1000);
+	
+	
+			
 	// 用户点击手动跳转按钮时，跳转到延时最小的线路
 	manualJumpElement.addEventListener('click', function() {
 		clearInterval(countdownInterval);
@@ -142,6 +161,23 @@ code=parameterValue;
 	setTimeout(function() {
 		manualJumpElement.style.display = 'inline-block';
 	}, 3000);
+	
+
+
+
 </script>
+	<!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/64ef5010b2d3e13950ecf9e7/1h93d1gb9';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
 </body>
 </html>
